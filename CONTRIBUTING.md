@@ -211,13 +211,13 @@ Week 11-12: Polish & Review
    - Ask clarifying questions about projects
 
 2. **Direct contact with mentors:**
-   - **Aditya Ranjan** (Lead Mentor)
+   - **Suraj Singla** (Lead Mentor)
+     - GitHub: [@surajsingla333](https://github.com/surajsingla333)
+   
+   - **Aditya Ranjan**
      - Email: aditya@swapso.io
      - GitHub: [@adityaranjan2005](https://github.com/adityaranjan2005)
      - X: [@em_adii](https://x.com/em_adii)
-   
-   - **Suraj Singla**
-     - GitHub: [@surajsingla333](https://github.com/surajsingla333)
    
    - **Aayush Pandey**
      - GitHub: [@Hsuyaa4518](https://github.com/Hsuyaa4518)
