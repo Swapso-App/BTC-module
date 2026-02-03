@@ -252,7 +252,7 @@ Implement complete BIP174 (Partially Signed Bitcoin Transaction) support in the 
 Have questions about any of these ideas? Feel free to:
 - Open an issue in the repository
 - Contact mentors:
-  - **Aditya Ranjan** - [GitHub](https://github.com/adityaranjan2005) | Email: aditya@swapso.io | [X](https://x.com/em_adii)
+  - **Aditya Ranjan** - [GitHub](https://github.com/adityaranjan2005) | Email: aditya@swapso.io | [X/Twitter](https://x.com/em_adii)
   - **Suraj Singla** - [GitHub](https://github.com/surajsingla333)
   - **Aayush Pandey** - [GitHub](https://github.com/Hsuyaa4518)
   - **Karan Gill** - [GitHub](https://github.com/krn-gill)
