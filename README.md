@@ -20,10 +20,9 @@
 
 This module provides developers with robust tools for:
 - **HD Wallet Creation** - Generate secure Bitcoin wallets using BIP32/BIP39 mnemonic phrases
-- **Multi-Account Management** - Manage multiple Bitcoin accounts from a single seed
 - **Transaction Management** - Build, sign, and broadcast Bitcoin transactions
 - **Key Security** - Enterprise-grade encryption with AWS KMS support
-- **Address Generation** - Support for all major Bitcoin address types
+
 
 ---
 
