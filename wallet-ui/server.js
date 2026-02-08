@@ -24,7 +24,7 @@ const axios = require("axios");
 const { KeyringController } = require("../btc-controller/src/index");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 0;
 
 app.use(cors());
 app.use(express.json());
@@ -258,8 +258,9 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`\n  Swapso Wallet UI running at http://localhost:${PORT}`);
+const server = app.listen(PORT, () => {
+  const actualPort = server.address().port;
+  console.log(`\n  Swapso Wallet UI running at http://localhost:${actualPort}`);
   console.log(`  Network: Demo mode (Testnet by default)`);
   console.log(
     `  Private key export: ${process.env.ALLOW_PRIVATE_KEY_EXPORT === "true" ? "ENABLED" : "DISABLED"}\n`,
