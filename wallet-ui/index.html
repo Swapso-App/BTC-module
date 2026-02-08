@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swapso Wallet</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    <header id="main-header" class="hidden">
+      <div class="header-left">
+        <span class="logo">&#x20BF;</span>
+        <h1>Swapso Wallet</h1>
+      </div>
+      <div class="header-right">
+        <span id="network-badge" class="badge">TESTNET</span>
+        <button id="btn-logout" class="btn-icon" title="Logout">&#x2715;</button>
+      </div>
+    </header>
+
+    <div id="view-onboarding" class="view">
+      <div class="onboard-card">
+        <div class="onboard-logo">&#x20BF;</div>
+        <h2>Swapso Wallet</h2>
+        <p class="subtitle">Open-source Bitcoin wallet powered by BTC-module</p>
+
+        <div class="onboard-actions">
+          <button id="btn-create" class="btn btn-primary">Create New Wallet</button>
+          <button id="btn-show-restore" class="btn btn-secondary">Restore from Mnemonic</button>
+          <button id="btn-show-import" class="btn btn-outline">Import Private Key</button>
+        </div>
+
+        <!-- Restore form -->
+        <div id="restore-form" class="hidden form-section">
+          <textarea id="input-mnemonic" placeholder="Enter your 12-word mnemonic phrase..." rows="3"></textarea>
+          <button id="btn-restore" class="btn btn-primary">Restore Wallet</button>
+        </div>
+
+        <!-- Import form -->
+        <div id="import-form" class="hidden form-section">
+          <input id="input-private-key" type="password" placeholder="Enter private key (hex)">
+          <button id="btn-import" class="btn btn-primary">Import Key</button>
+        </div>
+
+        <!-- Network selector -->
+        <div class="network-select">
+          <label>Network:</label>
+          <select id="select-network">
+            <option value="TESTNET" selected>Testnet</option>
+            <option value="MAINNET">Mainnet</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-mnemonic" class="view hidden">
+      <div class="card">
+        <h2>Your Recovery Phrase</h2>
+        <p class="warning">Write these words down and store them safely. You will NOT see them again.</p>
+        <div id="mnemonic-words" class="mnemonic-grid"></div>
+        <label class="checkbox-label">
+          <input type="checkbox" id="mnemonic-confirm">
+          I have safely stored my recovery phrase
+        </label>
+        <button id="btn-mnemonic-continue" class="btn btn-primary" disabled>Continue to Wallet</button>
+      </div>
+    </div>
+
+    <div id="view-dashboard" class="view hidden">
+      <div class="card balance-card">
+        <div class="balance-label">Total Balance</div>
+        <div class="balance-amount">
+          <span id="balance-btc">0.00000000</span>
+          <span class="balance-unit">BTC</span>
+        </div>
+        <div id="balance-sats" class="balance-sats">0 sats</div>
+        <div id="wallet-address" class="wallet-address" title="Click to copy"></div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="btn-send" class="btn btn-primary">Send</button>
+        <button id="btn-receive" class="btn btn-secondary">Receive</button>
+        <button id="btn-refresh" class="btn btn-outline">Refresh</button>
+      </div>
+
+      <div class="card">
+        <h3>Recent Transactions</h3>
+        <div id="tx-list" class="tx-list">
+          <div class="tx-empty">No transactions yet</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Advanced</h3>
+        <button id="btn-export-key" class="btn btn-outline btn-small">Export Private Key</button>
+        <div id="export-result" class="hidden export-result">
+          <code id="exported-key"></code>
+          <button id="btn-copy-key" class="btn-icon" title="Copy">&#x2398;</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-send" class="view hidden">
+      <div class="card">
+        <div class="view-header">
+          <button id="btn-back-send" class="btn-icon">&#x2190;</button>
+          <h2>Send Bitcoin</h2>
+        </div>
+
+        <div class="form-group">
+          <label>Recipient Address</label>
+          <input id="send-to" type="text" placeholder="bc1q... or 1... or 3...">
+          <span id="send-to-error" class="field-error hidden"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Amount (satoshis)</label>
+          <input id="send-amount" type="number" placeholder="e.g. 10000" min="546">
+          <span id="send-amount-error" class="field-error hidden"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Fee Rate</label>
+          <div class="fee-options">
+            <button class="fee-btn active" data-speed="slow">
+              <span class="fee-label">Slow</span>
+              <span id="fee-slow" class="fee-value">~1 sat/vB</span>
+            </button>
+            <button class="fee-btn" data-speed="standard">
+              <span class="fee-label">Standard</span>
+              <span id="fee-standard" class="fee-value">~2 sat/vB</span>
+            </button>
+            <button class="fee-btn" data-speed="fast">
+              <span class="fee-label">Fast</span>
+              <span id="fee-fast" class="fee-value">~5 sat/vB</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="btn-confirm-send" class="btn btn-primary btn-full">Send Transaction</button>
+      </div>
+    </div>
+
+    <div id="view-receive" class="view hidden">
+      <div class="card center">
+        <div class="view-header">
+          <button id="btn-back-receive" class="btn-icon">&#x2190;</button>
+          <h2>Receive Bitcoin</h2>
+        </div>
+        <canvas id="qr-canvas"></canvas>
+        <div id="receive-address" class="receive-address"></div>
+        <button id="btn-copy-address" class="btn btn-secondary">Copy Address</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <span id="loading-text">Loading...</span>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
