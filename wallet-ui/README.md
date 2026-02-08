@@ -171,7 +171,8 @@ cd wallet-ui
 npm install
 
 # Start the server
-npm start
+npm run start:win   #for windows
+npm run start   #for mac/linux
 ```
 
 The server will start on:
