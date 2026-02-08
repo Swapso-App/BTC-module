@@ -1,0 +1,26 @@
+{
+  "name": "swapso-wallet-ui",
+  "version": "1.0.0",
+  "description": "Open-source Bitcoin wallet UI for BTC-module",
+  "main": "server.js",
+  "scripts": {
+    "start": "cross-env NODE_PATH=./node_modules node -r ts-node/register server.js",
+    "start:win": "set NODE_PATH=./node_modules&& node -r ts-node/register server.js"
+  },
+  "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.0.5",
+    "axios": "^1.6.0",
+    "bip32": "^4.0.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.5",
+    "bitcoinjs-message": "^2.2.0",
+    "cors": "^2.8.5",
+    "ecpair": "^2.1.0",
+    "express": "^4.18.2",
+    "obs-store": "^4.0.3",
+    "satoshi-bitcoin": "^1.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "uuid": "^9.0.0"
+  }
+}
