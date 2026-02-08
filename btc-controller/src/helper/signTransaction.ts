@@ -1,7 +1,7 @@
 import * as bitcoin from "bitcoinjs-lib";
 import { ECPairInterface } from "ecpair";
 import { BitcoinNetworkName } from "../config";
-import BitcoinTransactionSizeCalculator from "../../../../../utils/feesCalculator"; // update path accordingly
+import BitcoinTransactionSizeCalculator from "./utils/transactionSizeCalculator";
 
 export async function signTransaction(
   child: ECPairInterface,
