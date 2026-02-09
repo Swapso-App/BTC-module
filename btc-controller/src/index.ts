@@ -238,7 +238,7 @@ export class KeyringController {
     const { from } = rawTransaction;
 
     try {
-      const response = await axios(`/api/bitcoin/network-info?network=${networkType}`, {
+      const response = await axios(`https://app.swapso.io/api/bitcoin/network-info?network=${networkType}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@ export const getBalance = async (
 ) => {
   try {
     const balance = await axios(
-      `/api/bitcoin/balance?address=${address}&network=${networkType}`,
+      `https://app.swapso.io/api/bitcoin/balance?address=${address}&network=${networkType}`,
       {
         method: "GET",
         headers: {
