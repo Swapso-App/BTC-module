@@ -1,0 +1,28 @@
+{
+  "name": "btc-module",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Bitcoin wallet infrastructure",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "mocha -r ts-node/register --timeout 15000 test/index.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.0.5",
+    "axios": "^1.6.0",
+    "bip32": "^4.0.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.5",
+    "bitcoinjs-message": "^2.2.0",
+    "ecpair": "^2.1.0",
+    "obs-store": "^4.0.3",
+    "satoshi-bitcoin": "^1.0.5"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
