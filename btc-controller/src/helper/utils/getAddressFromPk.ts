@@ -8,6 +8,7 @@ export function getAddressFromPk(privateKeyHex, network, index?) {
   const { address } = bitcoinjs.payments.p2wpkh({
     network,
     // pubkey: ec_pair.publicKey,
+    pubkey: ec_pair.publicKey,
   });
   return address;
 }

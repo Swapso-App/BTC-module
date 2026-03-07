@@ -22,6 +22,7 @@ const bip39 = require("bip39");
 const axios = require("axios");
 
 const { KeyringController } = require("../btc-controller/src/index");
+const { TransactionVisualizer } = require("../btc-controller/src/index");
 
 const app = express();
 const PORT = process.env.PORT || 0;
@@ -29,6 +30,27 @@ const PORT = process.env.PORT || 0;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+
+// Transaction Visualization API
+app.get("/api/visualize/:txid", async (req, res) => {
+  try {
+    const { txid } = req.params;
+    const { network } = req.query; // 'MAINNET' or 'TESTNET'
+    const net = (network === 'TESTNET' || network === 'MAINNET') ? network : 'MAINNET';
+    const visualizer = new TransactionVisualizer(net);
+    const data = await visualizer.analyzeTransaction(txid);
+    res.json(data);
+  } catch (error) {
+    const status = error.response?.status;
+    if (status === 404) {
+      const net = req.query.network || 'MAINNET';
+      return res.status(404).json({
+        error: `Transaction not found on ${net}. Make sure you have selected the correct network.`
+      });
+    }
+    res.status(500).json({ error: error.message || 'Failed to fetch transaction' });
+  }
+});
 
 const walletStore = new Map();
 

@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "nock": "^14.0.11"
+  }
+}

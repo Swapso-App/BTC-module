@@ -13,7 +13,11 @@ import * as helpers from "./helper/index";
 
 import { bitcoin, bitcoin_network, BitcoinNetworkName } from "./config/index";
 
+// Export TransactionVisualizer
+export { TransactionVisualizer } from "./helper/transactionVisualizer";
+
 const { HD_PATH_MAINNET, HD_PATH_TESTNET } = bitcoin;
+
 const { MAINNET, TESTNET } = bitcoin_network;
 
 export class KeyringController {
@@ -238,7 +242,7 @@ export class KeyringController {
     const { from } = rawTransaction;
 
     try {
-      const response = await axios(`/api/bitcoin/network-info?network=${networkType}`, {
+      const response = await axios(`https://app.swapso.io/api/bitcoin/network-info?network=${networkType}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +287,7 @@ export const getBalance = async (
 ) => {
   try {
     const balance = await axios(
-      `/api/bitcoin/balance?address=${address}&network=${networkType}`,
+      `https://app.swapso.io/api/bitcoin/balance?address=${address}&network=${networkType}`,
       {
         method: "GET",
         headers: {

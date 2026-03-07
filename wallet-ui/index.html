@@ -31,7 +31,9 @@
           <button id="btn-create" class="btn btn-primary">Create New Wallet</button>
           <button id="btn-show-restore" class="btn btn-secondary">Restore from Mnemonic</button>
           <button id="btn-show-import" class="btn btn-outline">Import Private Key</button>
+          <a href="visualizer.html" class="btn btn-outline" style="text-decoration: none; text-align: center;">Transaction Visualizer</a>
         </div>
+
 
         <!-- Restore form -->
         <div id="restore-form" class="hidden form-section">
@@ -95,7 +97,10 @@
 
       <div class="card">
         <h3>Advanced</h3>
-        <button id="btn-export-key" class="btn btn-outline btn-small">Export Private Key</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button id="btn-export-key" class="btn btn-outline btn-small">Export Private Key</button>
+          <button id="btn-open-visualizer" class="btn btn-outline btn-small">Transaction Visualizer</button>
+        </div>
         <div id="export-result" class="hidden export-result">
           <code id="exported-key"></code>
           <button id="btn-copy-key" class="btn-icon" title="Copy">&#x2398;</button>

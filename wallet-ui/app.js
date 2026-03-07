@@ -205,7 +205,10 @@ function renderTransactions(txs) {
     return `
       <div class="tx-item">
         <div class="tx-info">
-          <div class="tx-id">${tx.txid}</div>
+          <div class="tx-id-wrap">
+            <div class="tx-id">${tx.txid}</div>
+            <button class="tx-copy-btn" data-txid="${tx.txid}" title="Copy TX ID">&#x2398;</button>
+          </div>
           <div class="tx-time">${timeStr}</div>
         </div>
         <div>
@@ -372,6 +375,9 @@ $('btn-export-key').addEventListener('click', exportPrivateKey);
 $('btn-copy-key').addEventListener('click', () => {
   copyToClipboard($('exported-key').textContent);
 });
+$('btn-open-visualizer').addEventListener('click', () => {
+  window.open(`visualizer.html?network=${state.network}`, '_blank');
+});
 
 // Send view
 $('btn-back-send').addEventListener('click', () => showView('dashboard'));
@@ -390,6 +396,14 @@ document.querySelectorAll('.fee-btn').forEach((btn) => {
 $('btn-back-receive').addEventListener('click', () => showView('dashboard'));
 $('btn-copy-address').addEventListener('click', () => {
   copyToClipboard(state.address);
+});
+
+// Transaction copy buttons (event delegation)
+$('tx-list').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tx-copy-btn');
+  if (btn) {
+    copyToClipboard(btn.dataset.txid);
+  }
 });
 
 // Header

@@ -444,6 +444,26 @@ textarea { resize: vertical; }
   min-width: 0;
 }
 
+.tx-id-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tx-copy-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 0 2px;
+  flex-shrink: 0;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.tx-copy-btn:hover { color: var(--accent); }
+
 .tx-id {
   font-family: 'Courier New', monospace;
   font-size: 12px;

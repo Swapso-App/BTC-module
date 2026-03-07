@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitcoin Transaction Visualizer - Swapso Wallet</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="visualizer.css">
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header id="main-header">
+      <div class="header-left">
+        <span class="logo">&#x20BF;</span>
+        <h1>Transaction Visualizer</h1>
+      </div>
+      <div class="header-right">
+        <a href="index.html" class="btn btn-outline" style="margin-right: 10px;">Back to Wallet</a>
+        <span id="network-badge" class="badge">MAINNET</span>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="search-box">
+        <input type="text" id="tx-input" placeholder="Enter Transaction Hash (TXID)">
+        <select id="network-select">
+          <option value="MAINNET">Mainnet</option>
+          <option value="TESTNET" selected>Testnet</option>
+        </select>
+        <button id="btn-visualize" class="btn btn-primary">Visualize</button>
+      </div>
+
+      <div id="loading" class="hidden">Loading transaction data...</div>
+      <div id="error-message" class="hidden error"></div>
+
+      <div id="visualization-container" class="hidden">
+        <div id="mynetwork"></div>
+        <div id="export-toolbar">
+          <span class="export-label">Export &amp; Report:</span>
+          <button id="btn-export-json" class="btn btn-outline btn-small">&#x2B07; JSON</button>
+          <button id="btn-export-csv" class="btn btn-outline btn-small">&#x2B07; CSV</button>
+          <button id="btn-export-png" class="btn btn-outline btn-small">&#x2B07; PNG</button>
+          <button id="btn-copy-report" class="btn btn-outline btn-small">&#x2398; Copy Report</button>
+        </div>
+        <div id="details-panel">
+          <div class="details-col">
+            <h3>Transaction Details</h3>
+            <div id="tx-summary"></div>
+          </div>
+          <div class="details-col">
+            <h3>Selected Element</h3>
+            <div id="node-details">Click on a node to see details.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="visualizer.js"></script>
+</body>
+</html>
