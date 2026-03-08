@@ -12,7 +12,7 @@
     "axios": "^1.6.0",
     "bip32": "^4.0.0",
     "bip39": "^3.1.0",
-    "bitcoinjs-lib": "^6.1.5",
+    "bitcoinjs-lib": "^7.0.1",
     "bitcoinjs-message": "^2.2.0",
     "cors": "^2.8.5",
     "ecpair": "^2.1.0",
