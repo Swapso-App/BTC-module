@@ -61,7 +61,7 @@ export class KeyringController {
   }
 
   generateWallet() {
-    const { mnemonic, network, hdPath } = this.store.getState();
+    const { mnemonic, network } = this.store.getState();
     const seed = bip39.mnemonicToSeedSync(mnemonic);
     const bip32RootKey = this.bip32.fromSeed(seed, network);
     this.updatePersistentStore({ wallet: bip32RootKey });

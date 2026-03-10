@@ -1,7 +1,7 @@
 import * as bitcoinjs from "bitcoinjs-lib";
 
 export function generateAddress(bip32ExtendedKey, network, index) {
-  let wallet = bip32ExtendedKey.derive(index);
+  const wallet = bip32ExtendedKey.derive(index);
 
   const hasPrivkey = !wallet.isNeutered();
   let privkey;

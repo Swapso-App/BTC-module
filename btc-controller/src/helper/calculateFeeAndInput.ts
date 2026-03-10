@@ -11,7 +11,7 @@ export async function getTransactionSize(
   inputs: any;
 }> {
   let inputCount = 0;
-  let outputCount = 2;
+  const outputCount = 2;
 
   const utxos: any = await axios(
     `https://app.swapso.io/api/bitcoin/unspent?address=${address}&network=${network}`,
@@ -25,9 +25,9 @@ export async function getTransactionSize(
 
   let totalAmountAvailable = 0;
 
-  let inputs = [];
-  utxos.data.data.outputs.forEach(async (element) => {
-    let utxo: any = {};
+  const inputs: any[] = [];
+  utxos.data.data.outputs.forEach((element: any) => {
+    const utxo: any = {};
     utxo.value = sb.toSatoshi(parseFloat(element.value));
     utxo.scriptPubKey = element.script;
     utxo.tx_hex = element.tx_hex;
@@ -38,7 +38,8 @@ export async function getTransactionSize(
     inputs.push(utxo);
   });
 
-  let transactionSize = inputCount * 180 + outputCount * 34 + 10 - inputCount;
+  // Standard P2PKH size formula: each input ≈ 148 B, each output ≈ 34 B, base 10 B
+  const transactionSize = inputCount * 148 + outputCount * 34 + 10;
   return { transactionSize, totalAmountAvailable, inputs };
 }
 
@@ -47,10 +48,10 @@ export async function getFeeAndInput(
   network: BitcoinNetworkName,
   satPerByte: number
 ) {
-  let { transactionSize, totalAmountAvailable, inputs } =
+  const { transactionSize, totalAmountAvailable, inputs } =
     await getTransactionSize(address, network);
   let fee = 0;
-  // the fees assuming we want to pay 20 satoshis per byte
-  fee = transactionSize * satPerByte;
+  // Round up so we never underpay with fractional sat/byte rates
+  fee = Math.ceil(transactionSize * satPerByte);
   return { totalAmountAvailable, inputs, fee, transactionSize };
 }

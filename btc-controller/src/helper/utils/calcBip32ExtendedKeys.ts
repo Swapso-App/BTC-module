@@ -3,18 +3,18 @@ export function calcBip32ExtendedKeys(bip32RootKey, hdPath) {
   if (!bip32RootKey) {
     return bip32RootKey;
   }
-  var extendedKey = bip32RootKey;
+  let extendedKey = bip32RootKey;
   // Derive the key from the path constant
-  var pathBits = hdPath.split("/");
-  for (var i = 0; i < pathBits.length; i++) {
-    var bit = pathBits[i];
-    var index = parseInt(bit);
+  const pathBits = hdPath.split("/");
+  for (let i = 0; i < pathBits.length; i++) {
+    const bit = pathBits[i];
+    const index = parseInt(bit);
     if (isNaN(index)) {
       continue;
     }
-    var hardened = bit[bit.length - 1] == "'";
-    var isPriv = !extendedKey.isNeutered();
-    var invalidDerivationPath = hardened && !isPriv;
+    const hardened = bit[bit.length - 1] === "'";
+    const isPriv = !extendedKey.isNeutered();
+    const invalidDerivationPath = hardened && !isPriv;
     if (invalidDerivationPath) {
       extendedKey = null;
     } else if (hardened) {

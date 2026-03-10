@@ -40,10 +40,10 @@ describe('calculateFeeAndInput', () => {
     // ──────── getTransactionSize ──────── //
     describe('getTransactionSize', () => {
 
-        it('returns the correct transactionSize for 1 UTXO (formula: 1×180 + 2×34 + 10 − 1 = 257)', async () => {
+        it('returns the correct transactionSize for 1 UTXO (formula: 1×148 + 2×34 + 10 = 226)', async () => {
             mockUnspent(SINGLE_OUTPUT);
             const { transactionSize } = await getTransactionSize(TARGET_ADDRESS, NETWORK);
-            assert.strictEqual(transactionSize, 257);
+            assert.strictEqual(transactionSize, 226);
         });
 
         it('converts UTXO value to satoshis correctly (0.001 BTC → 100 000 sats)', async () => {
@@ -80,16 +80,16 @@ describe('calculateFeeAndInput', () => {
             assert.strictEqual(totalAmountAvailable, 300000);   // 100k + 200k
         });
 
-        it('calculates transactionSize correctly for 2 UTXOs (formula: 2×180 + 2×34 + 10 − 2 = 436)', async () => {
+        it('calculates transactionSize correctly for 2 UTXOs (formula: 2×148 + 2×34 + 10 = 374)', async () => {
             const twoOutputs = [
                 { ...SINGLE_OUTPUT[0], hash: 'b'.repeat(64) },
                 { ...SINGLE_OUTPUT[0], hash: 'c'.repeat(64) },
             ];
             mockUnspent(twoOutputs);
             const { transactionSize } = await getTransactionSize(TARGET_ADDRESS, NETWORK);
-            // inputCount * 180 + outputCount * 34 + 10 - inputCount
-            // 2*180 + 2*34 + 10 - 2 = 360 + 68 + 10 - 2 = 436
-            assert.strictEqual(transactionSize, 436);
+            // Standard P2PKH formula: inputCount * 148 + outputCount * 34 + 10
+            // 2*148 + 2*34 + 10 = 296 + 68 + 10 = 374
+            assert.strictEqual(transactionSize, 374);
         });
 
         it('rejects when the API returns a 500 error', async () => {
@@ -107,7 +107,7 @@ describe('calculateFeeAndInput', () => {
                 .query({ address: TARGET_ADDRESS, network: NETWORK })
                 .reply(200, { data: { outputs: SINGLE_OUTPUT } });
             const { transactionSize } = await getTransactionSize(TARGET_ADDRESS, NETWORK);
-            assert.strictEqual(transactionSize, 257);
+            assert.strictEqual(transactionSize, 226);
         });
 
     });
@@ -144,7 +144,7 @@ describe('calculateFeeAndInput', () => {
         it('returns the correct transactionSize from the underlying getTransactionSize call', async () => {
             mockUnspent(SINGLE_OUTPUT);
             const { transactionSize } = await getFeeAndInput(TARGET_ADDRESS, NETWORK, 5);
-            assert.strictEqual(transactionSize, 257);
+            assert.strictEqual(transactionSize, 226);
         });
 
     });
