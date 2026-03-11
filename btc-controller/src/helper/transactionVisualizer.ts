@@ -117,26 +117,31 @@ export class TransactionVisualizer {
 
       // Process Inputs (VIN)
       tx.vin.forEach((input, index) => {
-        const inputId = `in-${index}-${tx.txid}`;
-        
-        let label = `Input #${index}`;
-        let subLabel = '';
         let address = 'Unknown';
         let amount = 0;
 
         if (input.is_coinbase) {
-          label = 'Coinbase';
-          subLabel = '(New Coins)';
+          // Coinbase inputs have no real sender — add a synthetic node and edge
+          const coinbaseNodeId = `coinbase-${index}-${tx.txid}`;
+          nodes.push({
+            id: coinbaseNodeId,
+            label: 'Coinbase\n(New Coins)',
+            group: 'input',
+            details: { coinbase: true, sequence: input.sequence }
+          });
+          edges.push({
+            from: coinbaseNodeId,
+            to: tx.txid,
+            label: 'Coinbase',
+            arrows: 'to',
+            color: { color: '#aaaaff' }
+          });
         } else if (input.prevout) {
           address = input.prevout.scriptpubkey_address || 'Unknown Address';
           amount = input.prevout.value;
-          subLabel = `${(amount / 100000000).toFixed(8)} BTC`;
-          label = `${address.substring(0, 8)}...`;
           totalInput += amount;
 
-          // Add address node if not traced back (for simplicity, treating input source as address node)
-          // Ideally we trace back to previous TX, but visualization gets messy.
-          // Let's create a node for the Sender Address
+          // Create a node for the Sender Address (deduped by address)
           const addressNodeId = `addr-${address}`;
           if (!nodes.find(n => n.id === addressNodeId)) {
              nodes.push({
@@ -160,18 +165,13 @@ export class TransactionVisualizer {
       });
 
       // Process Outputs (VOUT)
-      tx.vout.forEach((output, index) => {
+      tx.vout.forEach((output) => {
         const address = output.scriptpubkey_address || 'OP_RETURN / Unparsed';
         const amount = output.value;
         totalOutput += amount;
         
-        const addressNodeId = `addr-out-${address}-${index}`; // Unique output node per index to handle change addresses clearly or same address used multiple times? 
-        // Actually, if same address receives multiple outputs, we might merge, but usually distinct vouts.
-        // Let's use address as ID if we want to merge, but `index` makes it distinct output. 
-        // Visualization often cleaner if we merge same addresses.
-        
         const existingNode = nodes.find(n => n.id === `addr-${address}`);
-        let targetId = existingNode ? existingNode.id : `addr-${address}`;
+        const targetId = existingNode ? existingNode.id : `addr-${address}`;
 
         if (!existingNode) {
           nodes.push({
@@ -209,7 +209,8 @@ export class TransactionVisualizer {
 
     } catch (error: any) {
       console.error("Error analyzing transaction:", error);
-      throw new Error(`Failed to analyze transaction: ${error.message}`);
+      const msg = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to analyze transaction: ${msg}`);
     }
   }
 }

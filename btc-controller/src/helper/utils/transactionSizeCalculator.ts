@@ -128,7 +128,7 @@ class BitcoinTransactionSizeCalculator {
 
     const sortedUTXOs = [...utxos].sort((a, b) => b.value - a.value);
     
-    let selectedUTXOs: UTXO[] = [];
+    const selectedUTXOs: UTXO[] = [];
     let totalInput = 0;
 
     for (const utxo of sortedUTXOs) {
@@ -145,7 +145,6 @@ class BitcoinTransactionSizeCalculator {
       // Scenario 2: Without change output (1 output) - if change would be dust
       const estimateWithoutChange = this.estimateTransactionSize(selectedUTXOs, 1, senderAddress);
       const feeWithoutChange = Math.ceil(estimateWithoutChange.vBytes * feeRate);
-      const changeWithoutChange = totalInput - targetAmount - feeWithoutChange;
 
       // Decide which scenario to use
       let finalFee: number;
