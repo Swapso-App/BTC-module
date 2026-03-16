@@ -1,5 +1,6 @@
 var assert = require('assert');
 const nock = require('nock'); // Import nock
+const bitcoinjs = require('bitcoinjs-lib')
 const bitcoinMessage = require('bitcoinjs-message')
 const { KeyringController: Bitcoin, getBalance } = require('../src/index')
 const {
@@ -38,9 +39,26 @@ const opts = {
 
 describe('Initialize wallet ', () => {
     const bitcoinWallet = new Bitcoin(opts)
+    let originalFetchFreshUtxos
 
     // Mock API responses before each test
     beforeEach(() => {
+        originalFetchFreshUtxos = bitcoinWallet.fetchFreshUtxos.bind(bitcoinWallet)
+        bitcoinWallet.fetchFreshUtxos = async (fromAddress) => {
+            const scriptPubKey = bitcoinjs.address
+                .toOutputScript(fromAddress, bitcoinjs.networks.testnet)
+                .toString('hex');
+
+            return [
+                {
+                    txid: 'a'.repeat(64),
+                    vout: 0,
+                    value: 100000,
+                    scriptPubKey,
+                },
+            ];
+        }
+
         // Mock network-info
         nock('https://app.swapso.io')
             .get('/api/bitcoin/network-info')
@@ -94,6 +112,7 @@ describe('Initialize wallet ', () => {
     });
 
     afterEach(() => {
+        bitcoinWallet.fetchFreshUtxos = originalFetchFreshUtxos
         nock.cleanAll();
     });
 
