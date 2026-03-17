@@ -13,6 +13,8 @@ import * as helpers from "./helper/index";
 
 import { bitcoin, bitcoin_network, BitcoinNetworkName } from "./config/index";
 
+export * from "./types/multisig";
+
 // Export TransactionVisualizer
 export { TransactionVisualizer } from "./helper/transactionVisualizer";
 
