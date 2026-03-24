@@ -1,5 +1,6 @@
 import { BitcoinNetworkName } from "./config/index";
 export { TransactionVisualizer } from "./helper/transactionVisualizer";
+export { buildMultiSigTransaction } from "./helper/buildMultiSigTransaction";
 export declare class KeyringController {
     bip32: any;
     ECPair: any;

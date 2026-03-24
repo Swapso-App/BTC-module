@@ -15,6 +15,7 @@ import { bitcoin, bitcoin_network, BitcoinNetworkName } from "./config/index";
 
 // Export TransactionVisualizer
 export { TransactionVisualizer } from "./helper/transactionVisualizer";
+export { buildMultiSigTransaction } from "./helper/buildMultiSigTransaction";
 
 const { HD_PATH_MAINNET, HD_PATH_TESTNET } = bitcoin;
 
