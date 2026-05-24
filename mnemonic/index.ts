@@ -41,6 +41,11 @@ export const encryptMnemonic = async () => {
   ]);
   const authTag = cipher.getAuthTag();
 
+  // Zero out the plaintext key from memory immediately after use
+  if (plaintextKey) {
+    plaintextKey.fill(0);
+  }
+
   return {
     encryptedMnemonic: encrypted.toString("base64"),
     iv: iv.toString("base64"),
@@ -92,6 +97,9 @@ export const decryptMnemonic = async (encryptedData: {
       decipher.update(Buffer.from(encryptedMnemonic, "base64")),
       decipher.final(),
     ]);
+
+    // Zero out the plaintext key from memory immediately after use
+    plaintextKey.fill(0);
 
     return decrypted.toString("utf8");
   } catch (error: any) {
