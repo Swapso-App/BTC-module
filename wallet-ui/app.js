@@ -251,9 +251,23 @@ async function sendTransaction() {
 
   if (hasError) return;
 
+  // Show confirmation modal with transaction details
+  const satPerByte = state.fees[state.selectedFee];
+  $('confirm-to').textContent = to;
+  $('confirm-amount').textContent = `${amount.toLocaleString()} sats (${(amount / 1e8).toFixed(8)} BTC)`;
+  $('confirm-fee').textContent = `${satPerByte} sat/vB (${state.selectedFee})`;
+  $('confirm-total').textContent = `~${amount.toLocaleString()}+ sats (amount + network fee)`;
+  $('confirm-modal').classList.remove('hidden');
+}
+
+async function broadcastTransaction() {
+  const to = $('send-to').value.trim();
+  const amount = parseInt($('send-amount').value, 10);
+  const satPerByte = state.fees[state.selectedFee];
+
+  $('confirm-modal').classList.add('hidden');
   showLoading('Signing & broadcasting...');
   try {
-    const satPerByte = state.fees[state.selectedFee];
     const data = await api('POST', `/api/wallet/${state.walletId}/send`, {
       from: state.address,
       to,
@@ -376,6 +390,12 @@ $('btn-copy-key').addEventListener('click', () => {
 // Send view
 $('btn-back-send').addEventListener('click', () => showView('dashboard'));
 $('btn-confirm-send').addEventListener('click', sendTransaction);
+
+// Confirmation modal
+$('btn-cancel-send').addEventListener('click', () => {
+  $('confirm-modal').classList.add('hidden');
+});
+$('btn-broadcast').addEventListener('click', broadcastTransaction);
 
 // Fee selector
 document.querySelectorAll('.fee-btn').forEach((btn) => {

@@ -156,6 +156,36 @@
       </div>
     </div>
 
+    <!-- Transaction Confirmation Modal -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3>Confirm Transaction</h3>
+        <p class="modal-subtitle">Please review the details before sending.</p>
+        <div class="confirm-details">
+          <div class="confirm-row">
+            <span class="confirm-label">Recipient</span>
+            <span id="confirm-to" class="confirm-value address"></span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">Amount</span>
+            <span id="confirm-amount" class="confirm-value"></span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">Fee Rate</span>
+            <span id="confirm-fee" class="confirm-value"></span>
+          </div>
+          <div class="confirm-row total">
+            <span class="confirm-label">Total Deducted</span>
+            <span id="confirm-total" class="confirm-value"></span>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="btn-cancel-send" class="btn btn-secondary">Cancel</button>
+          <button id="btn-broadcast" class="btn btn-primary">Confirm & Send</button>
+        </div>
+      </div>
+    </div>
+
     <div id="toast" class="toast hidden"></div>
 
     <div id="loading" class="loading hidden">
