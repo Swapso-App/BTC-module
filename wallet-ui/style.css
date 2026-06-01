@@ -454,6 +454,17 @@ textarea { resize: vertical; }
   max-width: 200px;
 }
 
+.tx-id a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.tx-id a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
 .tx-time {
   font-size: 11px;
   color: var(--text-muted);
