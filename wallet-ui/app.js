@@ -202,10 +202,14 @@ function renderTransactions(txs) {
       ? new Date(tx.blockTime * 1000).toLocaleDateString()
       : 'Pending';
 
+    const explorerBase = state.network === 'TESTNET'
+      ? 'https://mempool.space/testnet/tx/'
+      : 'https://mempool.space/tx/';
+
     return `
       <div class="tx-item">
         <div class="tx-info">
-          <div class="tx-id">${tx.txid}</div>
+          <div class="tx-id"><a href="${explorerBase}${tx.txid}" target="_blank" rel="noopener noreferrer">${tx.txid.slice(0, 8)}...${tx.txid.slice(-8)}</a></div>
           <div class="tx-time">${timeStr}</div>
         </div>
         <div>
